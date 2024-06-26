@@ -1,25 +1,28 @@
 import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
 import About from "./components/About";
-import Featured from './components/Featured.jsx';
+// import Featured from './components/Featured.jsx';
 import Cards from "./components/Cards.jsx";
-import Footer from "./components/Footer.jsx";
+// import Footer from "./components/Footer.jsx";
 import LocomotiveScroll from 'locomotive-scroll';
+import Loader from "./components/Loader.jsx";
 
 const App = () => {
   
   //global scrolltrigger imp
 
-  const locomotiveScroll = new LocomotiveScroll();
+    const locomotiveScroll = new LocomotiveScroll();
+  
 
   return (
-    <div className="w-full min-h-screen bg-zinc-900 text-white">
-        <Navbar/>
+    <div>
+        {/* <Navbar/> */}
+        <Loader/>
         <LandingPage/>
         <About/>
-        <Featured/>
-        <Cards/>
-        <Footer/>
+        {/* <Featured/> */}
+        {/* <Cards/> */}
+        {/* <Footer/> */}
     </div>
   )
 }
