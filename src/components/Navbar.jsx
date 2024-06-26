@@ -1,33 +1,44 @@
-// index.jsx
+import { useEffect } from "react";
+import "./Styles/Nav.css";
+import gsap from "gsap";
+import LocomotiveScroll from "locomotive-scroll";
+import "locomotive-scroll/dist/locomotive-scroll.css";
 
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import './Styles/Nav.css';
-
-const LandingPage = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const tl = useRef(gsap.timeline({ paused: true }));
-
+const Nav = () => {
   useEffect(() => {
+    // Inicialización de Locomotive Scroll
+    const scroll = new LocomotiveScroll({
+      el: document.querySelector(".container"),
+      smooth: true,
+    });
+
+    scroll.on("scroll", (event) => {
+      const { scroll: { y } } = event;
+      const nav = document.querySelector("nav");
+
+      if (y > 100) {
+        nav.classList.add("scrolled");
+      } else {
+        nav.classList.remove("scrolled");
+      }
+    });
+
+    // GSAP timeline para el menú
+    const tl = gsap.timeline({ paused: true });
+
     // Animación para abrir el menú
-    tl.current.to(".menu-overlay", {
+    tl.to(".menu-overlay", {
       duration: 1,
-      clipPath: menuOpen ? "polygon(0 0, 100% 0, 100% 100%, 0 100%)" : "polygon(0 0, 100% 0, 100% 0, 0 0)",
+      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", // Abre completamente
       ease: "power2.out",
       onStart: () => {
         document.querySelector(".menu-overlay").style.zIndex = "10";
         document.querySelector(".menu-overlay").style.pointerEvents = "all";
       },
-      onComplete: () => {
-        if (!menuOpen) {
-          document.querySelector(".menu-overlay").style.zIndex = "-1";
-          document.querySelector(".menu-overlay").style.pointerEvents = "none";
-        }
-      }
     });
 
     // Animación para los enlaces y botones
-    tl.current.from(
+    tl.from(
       ".menu-link, .btn",
       {
         opacity: 0,
@@ -39,9 +50,21 @@ const LandingPage = () => {
       "<"
     );
 
+    // Animación para la vista previa del video
+    tl.to(
+      ".video-preview",
+      {
+        duration: 1,
+        height: "200px",
+        ease: "power2.out",
+      },
+      "<"
+    );
+
     // Animación para el divisor
-    tl.current.to(
-      ".menu-divider", {
+    tl.to(
+      ".menu-divider",
+      {
         duration: 2,
         width: "100%",
         ease: "power4.out",
@@ -49,37 +72,54 @@ const LandingPage = () => {
       "<"
     );
 
-    // Asegurar que el menú esté oculto inicialmente
-    tl.current.reverse();
+    // Función para abrir el menú
+    const openMenu = () => tl.play();
 
-  }, [menuOpen]);
+    // Función para cerrar el menú
+    const closeMenu = () => {
+      tl.reverse();
+      tl.eventCallback("onReverseComplete", () => {
+        document.querySelector(".menu-overlay").style.pointerEvents = "none";
+        document.querySelector(".menu-overlay").style.zIndex = "-1";
+      });
+    };
 
-  // Función para abrir el menú
-  const openMenu = () => {
-    setMenuOpen(true);
-    tl.current.play();
-  };
+    document.querySelector(".menu-open-btn").addEventListener("click", openMenu);
+    document.querySelector(".menu-close-btn").addEventListener("click", closeMenu);
 
-  // Función para cerrar el menú
-  const closeMenu = () => {
-    setMenuOpen(false);
-    tl.current.reverse();
-  };
+    return () => {
+      document.querySelector(".menu-open-btn").removeEventListener("click", openMenu);
+      document.querySelector(".menu-close-btn").removeEventListener("click", closeMenu);
+      scroll.destroy();
+    };
+  }, []);
 
   return (
     <div className="container">
-      <nav className={menuOpen ? "nav-open" : ""}>
+      <nav>
         <div className="logo">Impulse</div>
-        <div className="menu-open-btn" onClick={openMenu}>Menu</div>
+        <div className="menu-open-btn">Menu</div>
       </nav>
+
+      <h1 className="header">Technopolymer</h1>
 
       <div className="menu-overlay">
         <div className="menu-nav">
           <div className="menu-logo">Impulse</div>
-          <div className="menu-close-btn" onClick={closeMenu}>Close</div>
+          <div className="menu-close-btn">Close</div>
         </div>
         <div className="menu-cols">
-          
+          <div className="cols">
+            <div className="video">
+              <div className="video-preview"></div>
+              <div className="video-details">
+                <p>
+                  <i className="ph-fill ph-play-circle"></i>Play reel
+                </p>
+                <p>-01:18</p>
+              </div>
+            </div>
+          </div>
           <div className="col">
             <div className="menu-link">
               <a href="#">Home</a>
@@ -104,6 +144,9 @@ const LandingPage = () => {
         <div className="menu-footer">
           <div className="menu-divider"></div>
           <div className="menu-footer-copy">
+            <div className="slogan">
+              <p>Tomorrows Brands, Today.</p>
+            </div>
             <div className="socials">
               <a href="#">Twitter</a>
               <a href="#">Instagram</a>
@@ -116,4 +159,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Nav;

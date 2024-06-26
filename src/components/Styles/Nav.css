@@ -3,50 +3,53 @@
     --color-menu-overlay: #a0e806;
     --color-menu-text: #000;
     --color-divider: #000000;
-}
-
-* {
+  }
+  
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html, body {
+  }
+  
+  html, body {
     width: 100%;
     height: 100vh;
-    background-size: cover;
+    background: var(--color-menu-overlay);
     font-family: "Satoshi";
-}
-
-a {
+    overflow-x: hidden; /* Prevenir el overflow horizontal */
+  }
+  
+  a {
     text-decoration: none;
     color: var(--color-menu-text);
-}
-
-i {
+  }
+  
+  i {
     position: relative;
     top: 1px;
-}
-
-.container {
+  }
+  
+  .container {
     width: 100%;
     height: 100%;
-}
-
-nav {
+    overflow: hidden; /* Prevenir overflow en la container */
+  }
+  
+  nav {
     position: fixed;
     width: 100%;
     display: flex;
     justify-content: space-between;
     padding: 2em;
     color: #fff;
-}
-
-.menu-open-btn {
+    z-index: 20; /* Asegura que el nav siempre esté por encima del contenido */
+  }
+  
+  .menu-open-btn {
     cursor: pointer;
-}
-
-h1.header {
+  }
+  
+  h1.header {
     position: absolute;
     bottom: 0;
     margin: 0.25em;
@@ -54,49 +57,53 @@ h1.header {
     color: #fff;
     font-size: 140px;
     line-height: 1;
-}
-
-.menu-overlay {
+  }
+  
+  .menu-overlay {
+    position: fixed; /* Fijar el menú en la pantalla */
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     padding: 2em;
-    background: var(--color-menu-overlay);
-    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); /* Hidden initially */
-    pointer-events: none; /* Disable events initially */
-    z-index: -1; /* Ensure it's behind main content */
-    transition: clip-path 0.5s ease; /* Smooth transition */
-}
-
-.menu-close-btn {
+    background: var(--color-menu-overlay); /* Quitar el background URL */
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); /* Oculto inicialmente */
+    pointer-events: none; /* Deshabilita eventos inicialmente */
+    z-index: -1; /* Asegura que esté detrás del contenido principal */
+    transition: clip-path 0.5s ease; /* Transición suave */
+  }
+  
+  .menu-close-btn {
     cursor: pointer;
-}
-
-.menu-nav {
+  }
+  
+  .menu-nav {
     display: flex;
     justify-content: space-between;
     margin-bottom: 1em;
     color: var(--color-menu-text);
-}
-
-.menu-cols {
+  }
+  
+  .menu-cols {
     display: flex;
-}
-
-.menu-cols > div {
+    flex-wrap: wrap;
+  }
+  
+  .menu-cols > div {
     flex: 1;
     padding: 1em 0;
-}
-
-.menu-link {
+  }
+  
+  .menu-link {
     position: relative;
     width: max-content;
-}
-
-.menu-link a {
+  }
+  
+  .menu-link a {
     font-size: 40px;
-}
-
-.menu-link:after {
+  }
+  
+  .menu-link:after {
     content: "";
     position: absolute;
     top: 100%;
@@ -105,13 +112,13 @@ h1.header {
     height: 2px;
     background-color: var(--color-menu-text);
     transition: 0.3s all;
-}
-
-.menu-link:hover:after {
+  }
+  
+  .menu-link:hover:after {
     width: 100%;
-}
-
-.btn {
+  }
+  
+  .btn {
     position: relative;
     margin: 2em 0;
     border: 1px solid var(--color-menu-text);
@@ -120,9 +127,9 @@ h1.header {
     border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
-}
-
-.btn:before {
+  }
+  
+  .btn:before {
     content: "";
     position: absolute;
     top: 0;
@@ -132,47 +139,48 @@ h1.header {
     background-color: var(--color-menu-text);
     transition: 0.3s all;
     z-index: -1;
-}
-
-.btn:hover a {
+  }
+  
+  .btn:hover a {
     color: var(--color-menu-overlay);
-}
-
-.btn:hover:before {
+  }
+  
+  .btn:hover:before {
     width: 100%;
-}
-
-.menu-footer {
+  }
+  
+  .menu-footer {
     display: flex;
     flex-direction: column;
     color: var(--color-menu-text);
-}
-
-.menu-divider {
+  }
+  
+  .menu-divider {
     width: 0%;
     height: 1px;
     background: var(--color-divider);
     margin: 1em 0;
-}
-
-.menu-footer-copy {
+  }
+  
+  .menu-footer-copy {
     display: flex;
     justify-content: space-between;
-}
-
-.socials {
+  }
+  
+  .socials {
     display: flex;
     gap: 1em;
-}
-
-@media(max-width: 900px) {
+  }
+  
+  @media (max-width: 900px) {
     .menu-overlay {
-        height: 100vh;
+      height: 100vh;
     }
     .menu-cols {
-        display: block;
+      display: block;
     }
     .menu-link a {
-        font-size: 30px;
+      font-size: 30px;
     }
-}
+  }
+  

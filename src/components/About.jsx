@@ -3,9 +3,6 @@ import "./Styles/About.css";
 const About = () => {
   return (
     <div
-      data-scroll
-      data-scroll-section
-      data-scroll-speed=".1"
       className="about-container"
     >
       <h1 className="about-heading">

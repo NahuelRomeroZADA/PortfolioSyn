@@ -1,4 +1,4 @@
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
 import About from "./components/About";
 // import Featured from './components/Featured.jsx';
@@ -19,7 +19,7 @@ const App = () => {
         {/* <Navbar/> */}
         <Loader/>
         <LandingPage/>
-        <About/>
+        {/* <About/> */}
         {/* <Featured/> */}
         {/* <Cards/> */}
         {/* <Footer/> */}
